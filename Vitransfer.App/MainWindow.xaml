@@ -1,0 +1,30 @@
+<Window Icon="/Assets/app.ico" x:Class="Vitransfer.App.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="Vitransfer" Width="1040" Height="720" MinWidth="760" MinHeight="500" Background="#0B1220" FontFamily="Segoe UI" Closing="Window_Closing">
+ <Window.Resources>
+  <Style x:Key="GameItemStyle" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+   <EventSetter Event="PreviewMouseRightButtonDown" Handler="GameRightClick"/>
+   <EventSetter Event="Loaded" Handler="GameItem_Loaded"/>
+  </Style>
+ </Window.Resources>
+ <Grid Margin="24"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+  <StackPanel Margin="0,0,0,22"><TextBlock Text="Vitransfer" FontSize="28" FontWeight="Bold"/><TextBlock Text="Your games. Your saves. Between devices." Foreground="#94A6BE" Margin="0,5,0,0"/></StackPanel>
+  <Grid Grid.Row="1"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="86"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+   <Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+    <TextBlock Text="ADDRESS 1" Foreground="#80DEB4" FontWeight="SemiBold" Margin="0,0,0,8"/>
+    <Grid Grid.Row="1" Margin="0,0,0,12"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><ComboBox x:Name="LeftAddress" IsEditable="True" IsTextSearchEnabled="True" Text="ftp://192.168.0.223:1337" ToolTip="FTP address (ftp://host:port) or local ux0 folder (e.g. D:\Vita\Download)"/><Button x:Name="LeftGo" Grid.Column="1" Content="Go" Click="LeftGo_Click"/></Grid>
+    <Grid Grid.Row="3" Margin="0,10,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><TextBlock x:Name="LeftStorage" Text="Total calculated size: N/A" Foreground="#94A6BE" FontSize="12" TextWrapping="Wrap" VerticalAlignment="Center"/><Button x:Name="LeftCalculate" Grid.Column="1" Content="Calculate Size" IsEnabled="False" Click="LeftCalculate_Click"/></Grid><ListBox x:Name="LeftGames" Grid.Row="2" SelectionMode="Extended" ItemContainerStyle="{StaticResource GameItemStyle}" ItemTemplate="{StaticResource GameTemplate}" SelectionChanged="Selection_Changed"/>
+   </Grid>
+   <StackPanel Grid.Column="1" VerticalAlignment="Center"><Button x:Name="CopyRight" Content="&gt;&gt;" FontSize="22" IsEnabled="False" ToolTip="Copy selected games from Address 1 to Address 2" Click="CopyRight_Click"/><Button x:Name="CopyLeft" Content="&lt;&lt;" FontSize="22" IsEnabled="False" ToolTip="Copy selected games from Address 2 to Address 1" Click="CopyLeft_Click"/></StackPanel>
+   <Grid Grid.Column="2"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+    <TextBlock Text="ADDRESS 2" Foreground="#80DEB4" FontWeight="SemiBold" Margin="0,0,0,8"/>
+    <Grid Grid.Row="1" Margin="0,0,0,12"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><ComboBox x:Name="RightAddress" IsEditable="True" IsTextSearchEnabled="True" Text="ftp://192.168.0.222:1337" ToolTip="FTP address (ftp://host:port) or local ux0 folder (e.g. D:\Vita\Download)"/><Button x:Name="RightGo" Grid.Column="1" Content="Go" Click="RightGo_Click"/></Grid>
+    <Grid Grid.Row="3" Margin="0,10,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><TextBlock x:Name="RightStorage" Text="Total calculated size: N/A" Foreground="#94A6BE" FontSize="12" TextWrapping="Wrap" VerticalAlignment="Center"/><Button x:Name="RightCalculate" Grid.Column="1" Content="Calculate Size" IsEnabled="False" Click="RightCalculate_Click"/></Grid><ListBox x:Name="RightGames" Grid.Row="2" SelectionMode="Extended" ItemContainerStyle="{StaticResource GameItemStyle}" ItemTemplate="{StaticResource GameTemplate}" SelectionChanged="Selection_Changed"/>
+   </Grid>
+  </Grid>
+  <StackPanel Grid.Row="2" Margin="0,20,0,0">
+   <Grid><StackPanel Orientation="Horizontal"><CheckBox x:Name="IncludeBase" Content="Include base game (+DLC)" Foreground="#E7EDF5" VerticalAlignment="Center"/><CheckBox x:Name="HideApps" Content="Hide apps" Foreground="#E7EDF5" Margin="24,0,0,0" VerticalAlignment="Center" Checked="HideApps_Changed" Unchecked="HideApps_Changed"/></StackPanel><Button x:Name="Cancel" Content="Cancel" HorizontalAlignment="Right" IsEnabled="False" Click="Cancel_Click"/></Grid>
+   <TextBlock Text="Unchecked: saves only · Checked: base games, DLC, updates, patches and saves" Foreground="#94A6BE" FontSize="12" Margin="0,3,0,12"/>
+   <ProgressBar x:Name="Progress" Height="5" Maximum="100" Background="#29374C" Foreground="#80DEB4" BorderThickness="0"/>
+   <TextBlock x:Name="Status" Text="Enter an ftp:// address or local ux0 folder in each column, then click Go." TextWrapping="Wrap" Foreground="#94A6BE" Margin="0,10,0,0"/>
+  </StackPanel>
+ </Grid>
+</Window>
